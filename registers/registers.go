@@ -12,7 +12,7 @@ const (
 	MemVram    = 0x06000000
 )
 
-var RegDispcnt = (*volatile.Register32)(unsafe.Pointer(uintptr(MemIo)))
+var RegDispcnt = (*volatile.Register16)(unsafe.Pointer(uintptr(MemIo)))
 
 const (
 	DcntMode0 = 0x0000
@@ -34,6 +34,12 @@ const (
 	ScreenHeight = 160
 )
 
-var RegVCount = (*volatile.Register32)(unsafe.Pointer(uintptr(MemIo + 0x0006)))
+var RegDispStat = (*volatile.Register16)(unsafe.Pointer(uintptr(MemIo + 0x0004)))
+
+const (
+	DStatVblIrq = 0x0008
+)
+
+var RegVCount = (*volatile.Register16)(unsafe.Pointer(uintptr(MemIo + 0x0006)))
 
 var RegKeyInput = (*volatile.Register16)(unsafe.Pointer(uintptr(MemIo + 0x0130)))
