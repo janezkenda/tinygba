@@ -6,7 +6,7 @@ import (
 	"runtime/volatile"
 
 	"github.com/janezkenda/tinygba/display"
-	"github.com/janezkenda/tinygba/input"
+	"github.com/janezkenda/tinygba/keypad"
 )
 
 func main() {
@@ -23,24 +23,22 @@ func main() {
 
 	display.NewMode4()
 
-	kp := input.NewKeyPad()
-
 	var frame int
 	for {
 		display.VSync()
 		if frame == 900 {
 			frame = 0
-			kp.Poll()
+			keypad.Poll()
 		}
 
 		for i := 0; i <= 9; i++ {
 			var c display.Color
-			k := input.Key(1 << i)
-			if kp.Hit(k) {
+			k := keypad.Key(1 << i)
+			if k.Hit() {
 				c = display.ClrRed
-			} else if kp.Released(k) {
+			} else if k.Released() {
 				c = display.ClrYellow
-			} else if kp.Held(k) {
+			} else if k.Held() {
 				c = display.ClrLime
 			} else {
 				c = display.RGB15(27, 27, 29)
