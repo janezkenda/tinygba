@@ -1,6 +1,7 @@
 package display
 
 import (
+	"image/color"
 	"unsafe"
 
 	"runtime/volatile"
@@ -43,4 +44,17 @@ func (m3 *Mode3) Fill(c Color) {
 			m3.vmem[y][x].Set(uint16(c))
 		}
 	}
+}
+
+// Methods for implementing the Displayer interface, so it can be used with TinyFont.
+func (m3 *Mode3) Size() (int16, int16) {
+	return 240, 160
+}
+
+func (m3 *Mode3) SetPixel(x, y int16, c color.RGBA) {
+	m3.Plot(int(x), int(y), ColorFromRGB(c))
+}
+
+func (m3 *Mode3) Display() error {
+	return nil
 }
