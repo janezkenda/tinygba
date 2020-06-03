@@ -16,7 +16,7 @@ type Mode3 struct {
 }
 
 func NewMode3() *Mode3 {
-	registers.RegDispcnt.Set(registers.DcntMode3 | registers.DcntBg2)
+	registers.IO.LCD.DispCnt.Set(registers.DcntMode3 | registers.DcntBg2)
 	return &Mode3{
 		vmem: (*[160][240]volatile.Register16)(unsafe.Pointer(uintptr(VRam))),
 	}

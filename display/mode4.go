@@ -21,7 +21,7 @@ type Mode4 struct {
 }
 
 func NewMode4() *Mode4 {
-	registers.RegDispcnt.Set(registers.DcntMode4 | registers.DcntBg2)
+	registers.IO.LCD.DispCnt.Set(registers.DcntMode4 | registers.DcntBg2)
 
 	page0 := (*[160][120]volatile.Register16)(unsafe.Pointer(uintptr(Page0Addr)))
 	page1 := (*[160][120]volatile.Register16)(unsafe.Pointer(uintptr(Page1Addr)))
@@ -35,7 +35,7 @@ func NewMode4() *Mode4 {
 }
 
 func (m4 *Mode4) FlipPage() {
-	registers.RegDispcnt.Set(registers.RegDispcnt.Get() ^ registers.DcntPage)
+	registers.IO.LCD.DispCnt.Set(registers.IO.LCD.DispCnt.Get() ^ registers.DcntPage)
 	if m4.addr == Page1Addr {
 		m4.addr = Page0Addr
 		m4.vmem = m4.page0
